@@ -74,4 +74,40 @@ public class day03 {
         sb.reverse();
         return sb.toString();
     }
+
+
+    public String multiply2(String num1, String num2) {
+        if ("0".equals(num1)||"0".equals(num2)){
+            return "0";
+        }
+        int l1 = num1.length()-1;
+        int l2 = num2.length()-1;
+        //考虑极端情况：两个数的长度为m,n
+        //1. 当两个数都最小时，相乘得到的长度大于等于m+n-1
+        //2. 当两个数都最大时，相乘得到的长度小于m+n+1
+        //故长度取m+n时，可以满足需求
+        int[] result = new int[(l1+1)+(l2+1)];
+        for (int i = l1; i >= 0 ; i--) {
+            int x = num1.charAt(i)-'0';
+            for (int j = l2; j >= 0 ; j--) {
+                int y = num2.charAt(j)-'0';
+                //每一位先乘上并相加
+                result[i+j+1] += x*y;
+            }
+        }
+        //进行进位运算
+        for (int i = result.length-1; i >0; i--) {
+            result[i-1] += result[i]/10;
+            result[i] %= 10;
+        }
+
+        int index = result[0]==0?1:0;
+        StringBuilder sb = new StringBuilder();
+        while (index<result.length){
+            sb.append(result[index]);
+            index++;
+        }
+        return sb.toString();
+    }
+
 }
