@@ -62,6 +62,24 @@ public class day06 {
 
     public static void main(String[] args) {
         day06 day06 = new day06();
-        day06.generateMatrix(3);
+        int i = day06.uniquePaths(3, 2);
+        System.out.println(i);
     }
+
+    public int uniquePaths(int m, int n) {
+        if (m==0||n==0){
+            return 0;
+        }
+        int[][] dp = new int[n][m];
+        dp[0][0] = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int up = i==0?0:dp[i-1][j];
+                int left = j==0?0:dp[i][j-1];
+                dp[i][j] += up+left;
+            }
+        }
+        return dp[n-1][m-1];
+    }
+
 }
